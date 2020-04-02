@@ -77,6 +77,26 @@ public class RefMedicamentBDDFController {
 
     }
     
+	 /**
+     * http://localhost:8102/rest/refMedicamentBDDFs/_search?fieldName=nom&fieldValue=ANASTROZOLE RATIOPHARM
+     * curl ne marche pas avec /_search?fieldName=nom&fieldValue=ANASTROZOLE RATIOPHARM
+     * 
+     * elastic url: 
+     * http://localhost:9200/refmedicamentbddfs/refmedicamentbddf/_search
+     * {
+		    "query": {
+		        "match_phrase_prefix" : {
+		          "nom" : "ANASTROZOLE RATIOPHARM"
+		        }
+		    }
+		}
+     * @param fieldName
+     * @param fieldValue
+     * @return
+     * @throws JsonParseException
+     * @throws JsonMappingException
+     * @throws IOException
+     */
     @GetMapping("/refMedicamentBDDFs/_search")
     public List<Object> searchByName(@RequestParam(name = "fieldName", required = true) String fieldName, 
     								 @RequestParam(name = "fieldValue", required = true) String fieldValue ) throws JsonParseException, JsonMappingException, IOException {
