@@ -13,6 +13,8 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,8 @@ import com.example.elasticsearch.util.ElascticSearchUtil;
 import com.example.elasticsearch.util.TxtFileReader;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ClassPathResource;
 
 @RestController
 @RequestMapping("/rest")
@@ -42,9 +46,11 @@ public class RefMedicamentBDDFController {
 
 	@PostMapping("/refMedicamentBDDFs")
 	public void saveAll() throws IOException {
+		Resource resource = new ClassPathResource("CIS_bdpm.txt");
 		TxtFileReader fileReader = new TxtFileReader();
-		List<RefMedicamentBDDF> refMedicamentBDDFs = fileReader.readFile(FILE_NAME);
+		// List<RefMedicamentBDDF> refMedicamentBDDFs = fileReader.readFile(FILE_NAME);
 
+		List<RefMedicamentBDDF> refMedicamentBDDFs = fileReader.readFile(resource.getFile().getPath());
 		System.out.println("start ...");
 		for (RefMedicamentBDDF refMedicamentBDDF : refMedicamentBDDFs) {
 			refMedicamentBDDF.setType("BDDF");
